@@ -14,8 +14,10 @@ def create_app(config_class=Config):
 
     # import blueprints
     from sqltest.main.routes import main
+    from sqltest.projects.routes import projects
 
     # register the blueprints
     app.register_blueprint(main)
+    app.register_blueprint(projects)
 
     return app
