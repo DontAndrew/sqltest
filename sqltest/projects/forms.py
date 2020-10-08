@@ -18,11 +18,23 @@ class ProjectAdd(FlaskForm):
         choices=[
             ("pbp", "Public Bidding"),
             ("svp", "Small Value Procurement"),
-            ("amp", "Alternative Mode of Procurement"),
+            ("sho", "Shopping"),
+            ("dir", "Direct Contracting"),
+            ("eme", "Emergency Cases"),
+            ("toc", "Take Over Contracts"),
+            ("adj", "Adjacentt/Contigious Contract"),
+            ("SSA", "Scientific, similarly or artistic work"),
+            ("htc", "Highly Technical Consultant"),
+            ("svp", "Small Value Procurement"),
+            ("lea", "Lease of Real Property"),
         ],
     )
     proj_class = SelectField(
         "Class",
-        choices=[("inf", "Infrastructure"), ("gds", "Goods"), ("con", "Consultancy"),],
+        choices=[
+            ("goods", "Goods"),
+            ("infrastructure", "Infrastructure"),
+            ("consultancy", "Consultancy"),
+        ],
     )
     submit = SubmitField("Submit")

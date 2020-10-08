@@ -13,6 +13,7 @@ class User(db.Model):
 
 class Contractor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    contract_id = db.Column(db.Integer, db.ForeignKey("contract.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
 
 
@@ -24,7 +25,7 @@ class Project(db.Model):
     mode = db.Column(db.String(50), nullable=False)
     cls = db.Column(db.String(80), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    contract = db.relationship("Contract", backref="project", lazy=True)
+    contract_id = db.relationship("Contract", backref="project", lazy=True)
 
     def __repr__(self):
         return f"Project<'{self.key}', '{self.title}', {self.abc}>"
@@ -33,7 +34,7 @@ class Project(db.Model):
 class Contract(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
-    contractor_id = db.Column(db.Integer, db.ForeignKey("contactor.id"))
+    contractor_id = db.relationship("Contractor", backref="contract", lazy=True)
     name = db.Column(db.String(50),)
     amount = db.Column(db.Numeric(10, 2))
 

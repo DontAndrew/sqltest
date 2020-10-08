@@ -1,14 +1,131 @@
 {% extends "layout.html" %}
 
 {% block button_head %}
+<!-- buttons -->
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a class="nav-link" href="{{ url_for('projects.project_add') }}"><button type="button"
-                class="btn btn-sm btn-outline-secondary">Add Data</button></a>
+        <a class="nav-link"><button type="button" class="btn btn-sm btn-outline-secondary">Add Data</button></a>
         <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
     </div>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#addModal">Add
+        Project</button>
     <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
         This week
     </button>
 </div>
+<!-- MODAL -->
+<div class="modal fate" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Add New Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" , action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset>
+                        <!-- title -->
+                        <div class="form-group">
+                            {{ form.title.label(class="col-form-label-sm col-form-label") }}
+                            <div>
+                                {% if form.title.errors %}
+                                {{ form.title(class="form-control form-control-sm is-invalid pd-") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.title(class="form-control form-control-sm") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- abc -->
+                        <div class="form-group">
+                            {{ form.abc.label(class="col-form-label-sm col-form-label") }}
+                            <div>
+                                {% if form.abc.errors %}
+                                {{ form.abc(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.abc.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.abc(class="form-control form-control-sm") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- mode -->
+                        <div class="form-group">
+                            {{ form.mode.label(class="col-form-label-sm col-form-label") }}
+                            <div>
+                                {% if form.mode.errors %}
+                                {{ form.mode(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.mode.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.mode(class="form-control form-control-sm") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- classification -->
+                        <div class="form-group">
+                            {{ form.proj_class.label(class="col-form-label-sm col-form-label") }}
+                            <div>
+                                {% if form.proj_class.errors %}
+                                {{ form.proj_class(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.proj_class.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.proj_class(class="form-control form-control-sm") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- submit button -->
+                        <div class="form-group">
+                            <div>
+                                {{ form.submit(class="pd-0 btn btn-lg btn-primary btn-block")}}
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Unique Identifier</th>
+        <th>Project Title</th>
+        <th>Approved Budget</th>
+        <th>Mode of Procurement</th>
+        <th>Classification</th>
+    </tr>
+    {% for proj in projs %}
+    <!--| sort(attribute='id', reverse=True) %} -->
+    <tr>
+        <td>{{ proj.key }}</a></td>
+        <td>{{ proj.title }}</td>
+        <td>{{ proj.abc }}</td>
+        <td>{{ proj.mode }}</td>
+        <td>{{ proj.cls }}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
