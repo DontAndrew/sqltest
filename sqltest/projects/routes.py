@@ -44,7 +44,7 @@ def project_all():
 
 @projects.route("/projects/<key>")
 def details(key):
-    detail = Project.query.filter_by(key=key).first()
+    detail = Project.query.filter(Project.key.contains(key)).first()
     return render_template(
         "projects/details.html", title=key, active_data="active", detail=detail
     )

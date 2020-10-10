@@ -1,18 +1,28 @@
 {% extends "layout.html" %}
 
+{% block content_header%}
+<h4>{{ detail.title }}</h4>
+{% endblock%}
 {% block content %}
-<table>
-    <tr>
-        <th>Project Title</th>
-        <th>Approved Budget</th>
-        <th>Mode of Procurement</th>
-        <th>Classifications</th>
-    </tr>
-    <tr>
-        <td>{{ detail.title }}</td>
-        <td>{{ detail.abc }}</td>
-        <td>{{ detail.mode }}</td>
-        <td>{{ detail.cls }}</td>
-    </tr>
-</table>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Details</div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <th>Project Title</th>
+                    <th>Approved Budget</th>
+                    <th>Mode of Procurement</th>
+                    <th>Classifications</th>
+                </tr>
+                <tr>
+                    <td>{{ detail.title }}</td>
+                    <td>{{ detail.abc }}</td>
+                    <td>{{ detail.mode }}</td>
+                    <td>{{ detail.cls }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
