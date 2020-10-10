@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, url_for
 from sqltest import db
 from .utils import create_code
 from .forms import ProjectAdd
@@ -19,7 +19,6 @@ def project_all():
         .filter(Project.date_created >= date_start)
         .all()
     )
-    proj_num = len(projs)
     form = ProjectAdd()
     if form.validate_on_submit():
         mode = form.mode.data
@@ -33,7 +32,7 @@ def project_all():
         )
         db.session.add(project)
         db.session.commit()
-        return redirect("projects")
+        return redirect(url_for(".details", key=code))
     return render_template(
         "projects/projects.html",
         title="Projects",
@@ -43,22 +42,9 @@ def project_all():
     )
 
 
-# @projects.route("/project_add", methods=["GET", "POST"])
-# def project_add():
-#     form = ProjectAdd()
-#     if form.validate_on_submit():
-#         mode = form.mode.data
-#         code = create_code(mode)
-#         project = Project(
-#             key=code,
-#             title=form.title.data,
-#             abc=form.abc.data,
-#             mode=form.mode.data,
-#             cls=form.proj_class.data,
-#         )
-#         db.session.add(project)
-#         db.session.commit()
-#         return redirect("projects")
-#     return render_template(
-#         "projects/form_add.html", title="New Project", active_data="active", form=form,
-#     )
+@projects.route("/projects/<key>")
+def details(key):
+    detail = Project.query.filter_by(key=key).first()
+    return render_template(
+        "projects/details.html", title=key, active_data="active", detail=detail
+    )

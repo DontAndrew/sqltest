@@ -13,7 +13,7 @@
         This week
     </button>
 </div>
-<!-- MODAL -->
+<!-- MODAL adding project-->
 <div class="modal fate" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -108,6 +108,7 @@
 </div>
 {% endblock %}
 
+<!-- table view of all projects -->
 {% block content %}
 <table>
     <tr>
@@ -118,9 +119,8 @@
         <th>Classification</th>
     </tr>
     {% for proj in projs %}
-    <!--| sort(attribute='id', reverse=True) %} -->
     <tr>
-        <td>{{ proj.key }}</a></td>
+        <td><a href="{{ url_for('projects.details', key=proj.key) }}">{{ proj.key }}</a></td>
         <td>{{ proj.title }}</td>
         <td>{{ proj.abc }}</td>
         <td>{{ proj.mode }}</td>

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Project Title</th>
+        <th>Approved Budget</th>
+        <th>Mode of Procurement</th>
+        <th>Classifications</th>
+    </tr>
+    <tr>
+        <td>{{ detail.title }}</td>
+        <td>{{ detail.abc }}</td>
+        <td>{{ detail.mode }}</td>
+        <td>{{ detail.cls }}</td>
+    </tr>
+</table>
+{% endblock %}
