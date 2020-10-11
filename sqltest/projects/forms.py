@@ -38,3 +38,9 @@ class ProjectAdd(FlaskForm):
         ],
     )
     submit = SubmitField("Submit")
+
+
+class NewLot(FlaskForm):
+    title = StringField("Lot Title", validators=[DataRequired()])
+    abc = DecimalField("Budget Per Lot", validators=[InputRequired()])
+    submit = SubmitField("Submit")
