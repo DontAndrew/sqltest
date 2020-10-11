@@ -1,8 +1,8 @@
 from datetime import datetime, date
 from flask import Blueprint, render_template, redirect, url_for
 from sqltest import db
-from .utils import create_code
-from .forms import ProjectAdd
+from .utils import create_code, create_lot_code
+from .forms import ProjectAdd, NewLot
 from sqltest.models import Project, Contractor
 
 
@@ -42,9 +42,18 @@ def project_all():
     )
 
 
-@projects.route("/projects/<key>")
+@projects.route("/projects/<key>", methods=["GET", "POST"])
 def details(key):
     detail = Project.query.filter(Project.key.contains(key)).first()
+    lots = detail.lots_id
+    form_lot = NewLot()
+    if form_lot.validate_on_submit():
+        print(create_lot_code(key))
     return render_template(
-        "projects/details.html", title=key, active_data="active", detail=detail
+        "projects/details.html",
+        title=key,
+        active_data="active",
+        detail=detail,
+        form_lot=form_lot,
+        lots=lots,
     )
