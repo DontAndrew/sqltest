@@ -26,14 +26,29 @@ class Project(db.Model):
     cls = db.Column(db.String(80), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     contract_id = db.relationship("Contract", backref="project", lazy=True)
+    lots_id = db.relationship("Lots", backref="project", lazy=True)
 
     def __repr__(self):
         return f"Project<'{self.key}', '{self.title}', {self.abc}>"
 
 
+class Lots(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
+    lot_key = db.Column(db.String(50), unique=True, nullable=False)
+    lot_title = db.Column(db.String(50), nullable=False)
+    abc = db.Column(db.Numeric(10, 2), nullable=False)
+
+    def __repr__(self):
+        return (
+            f"Lot<'{self.lot_key}','{self.project_id}' '{self.lot_title}', {self.abc}>"
+        )
+
+
 class Contract(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
+    lots_id = db.Column(db.Integer, db.ForeignKey("lots.id"))
     contractor_id = db.relationship("Contractor", backref="contract", lazy=True)
     name = db.Column(db.String(50),)
     amount = db.Column(db.Numeric(10, 2))
