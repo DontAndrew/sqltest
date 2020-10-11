@@ -4,25 +4,124 @@
 <h4>{{ detail.title }}</h4>
 {% endblock%}
 {% block content %}
+<div class="modal fate" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Add Lot Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" , action="">
+                    {{ form_lot.hidden_tag() }}
+                    <fieldset>
+                        <!-- title -->
+                        <div class="form-group">
+                            {{ form_lot.title.label(class="col-form-label-sm col-form-label") }}
+                            <div>
+                                {% if form_lot.title.errors %}
+                                {{ form_lot.title(class="form-control form-control-sm is-invalid pd-") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_lot.title.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form_lot.title(class="form-control form-control-sm") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- abc -->
+                        <div class="form-group">
+                            {{ form_lot.abc.label(class="col-form-label-sm col-form-label") }}
+                            <div>
+                                {% if form_lot.abc.errors %}
+                                {{ form_lot.abc(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_lot.abc.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form_lot.abc(class="form-control form-control-sm") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- submit button -->
+                        <div class="form-group">
+                            <div>
+                                {{ form_lot.submit(class="pd-0 btn btn-lg btn-primary btn-block")}}
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">Details</div>
-        <div class="panel-body">
-            <table>
-                <tr>
-                    <th>Project Title</th>
-                    <th>Approved Budget</th>
-                    <th>Mode of Procurement</th>
-                    <th>Classifications</th>
-                </tr>
-                <tr>
-                    <td>{{ detail.title }}</td>
-                    <td>{{ detail.abc }}</td>
-                    <td>{{ detail.mode }}</td>
-                    <td>{{ detail.cls }}</td>
-                </tr>
+    <div class="card">
+        <div class="card-header">Details</div>
+        <div class="card-body mb-0">
+            <table class="table col-6">
+                <tbody>
+                    <tr>
+                        <th scope="col">Project Title:</th>
+                        <td>{{ detail.title }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Approved Budget:</th>
+                        <td>{{ detail.abc }}</td>
+                        <th scope="col">APP</th>
+                        <td>APP #</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Mode of Procurement:</th>
+                        <td>{{ detail.mode }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Classifications:</th>
+                        <td>{{ detail.cls }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Lots:</th>
+                        <td><button type="button" data-toggle="modal" data-target="#addModal">Add Lot</button></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
+{% if lots %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">Lot Item</div>
+        <div class="card-body mb-0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Identifier</th>
+                        <th>Lot</th>
+                        <th>Budget</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lot in lots %}
+                    <tr>
+                        <td>{{ lot.lot_key }}</td>
+                        <td>{{ lot.lot_title }}</td>
+                        <td>{{ lot.abc }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
