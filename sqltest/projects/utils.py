@@ -13,3 +13,11 @@ def create_code(mode, year, projs):
         projs_num_f = f"00{projs_num}"
 
     return f"{mode.upper()}-{str(year)[2:]}-00-{projs_num_f}"
+
+
+def create_lot_code(key):
+    proj = Project.query.filter_by(key=key).first()
+    num_lots = len(proj.lots_id)
+    li_key = key.split("-")
+    li_key[2] = "0" + str(num_lots + 1)
+    return "-".join(li_key)
