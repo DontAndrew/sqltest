@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from sqltest import db
 from .utils import create_code, create_lot_code
 from .forms import ProjectAdd, NewLot
-from sqltest.models import Project, Contractor
+from sqltest.models import Project, Contractor, Lots
 
 
 projects = Blueprint("projects", __name__)
@@ -48,7 +48,15 @@ def details(key):
     lots = detail.lots_id
     form_lot = NewLot()
     if form_lot.validate_on_submit():
-        print(create_lot_code(key))
+        lots = Lots(
+            project_id=detail.id,
+            lot_key=create_lot_code(key),
+            lot_title=form_lot.title.data,
+            abc=form_lot.abc.data,
+        )
+        db.session.add(lots)
+        db.session.commit()
+        return redirect(url_for(".details", key=key))
     return render_template(
         "projects/details.html",
         title=key,

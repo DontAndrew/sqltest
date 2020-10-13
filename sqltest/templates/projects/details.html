@@ -64,12 +64,17 @@
         </div>
     </div>
 </div>
+<!-- details tab -->
 <div class="container">
     <div class="card">
         <div class="card-header">Details</div>
         <div class="card-body mb-0">
             <table class="table col-6">
                 <tbody>
+                    <tr>
+                        <th scope="col">Project Identifier:</th>
+                        <td>{{ detail.key }}</td>
+                    </tr>
                     <tr>
                         <th scope="col">Project Title:</th>
                         <td>{{ detail.title }}</td>
@@ -105,7 +110,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Identifier</th>
+                        <th>Lot Identifier</th>
                         <th>Lot</th>
                         <th>Budget</th>
                     </tr>
