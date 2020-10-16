@@ -22,10 +22,9 @@ class ProjectAdd(FlaskForm):
             ("dir", "Direct Contracting"),
             ("eme", "Emergency Cases"),
             ("toc", "Take Over Contracts"),
-            ("adj", "Adjacentt/Contigious Contract"),
+            ("adj", "Adjacentt/Contiguous Contract"),
             ("SSA", "Scientific, similarly or artistic work"),
             ("htc", "Highly Technical Consultant"),
-            ("svp", "Small Value Procurement"),
             ("lea", "Lease of Real Property"),
         ],
     )

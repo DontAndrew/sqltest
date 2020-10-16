@@ -5,11 +5,13 @@
 <!-- buttons -->
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a class="nav-link"><button type="button" class="btn btn-sm btn-outline-secondary">Add Data</button></a>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary"><a
+                href="{{ url_for('main.export_all') }}">Export</a></button>
     </div>
-    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#addModal">Add
-        Project</button>
+    <div class="btn-group mr-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#addModal">Add
+            Project</button>
+    </div>
     <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
         This week
     </button>
@@ -111,22 +113,31 @@
 
 <!-- table view of all projects -->
 {% block content %}
-<table>
-    <tr>
-        <th>Unique Identifier</th>
-        <th>Project Title</th>
-        <th>Approved Budget</th>
-        <th>Mode of Procurement</th>
-        <th>Classification</th>
-    </tr>
-    {% for proj in projs %}
-    <tr>
-        <td><a href="{{ url_for('projects.details', key=proj.key) }}">{{ proj.key }}</a></td>
-        <td>{{ proj.title }}</td>
-        <td>{{ proj.abc }}</td>
-        <td>{{ proj.mode }}</td>
-        <td>{{ proj.cls }}</td>
-    </tr>
-    {% endfor %}
+<table id="proj-dt" class="table hover table-bordered compact" style="width:100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Identifier</th>
+            <th>Project Title</th>
+            <th>Approved Budget</th>
+            <th>Mode</th>
+            <th>Classification</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for proj in projs %}
+        <tr>
+            <td>{{ proj.id }}</td>
+            <td><a href="{{ url_for('projects.details', key=proj.key) }}">{{ proj.key }}</a></td>
+            <td>{{ proj.title }}</td>
+            <td>{{ proj.abc }}</td>
+            <td>{{ proj.mode }}</td>
+            <td>{{ proj.cls }}</td>
+            <td>{{ proj.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

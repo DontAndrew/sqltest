@@ -1,7 +1,6 @@
 from datetime import datetime, date
 from flask import Blueprint, render_template, redirect, url_for
 from sqltest import db
-from .utils import create_code, create_lot_code
 from .forms import ProjectAdd, NewLot
 from sqltest.models import Project, Contractor, Lots
 
@@ -20,15 +19,17 @@ def project_all():
         .all()
     )
     form = ProjectAdd()
+    projs_num = str(len(projs) + 1)
     if form.validate_on_submit():
         mode = form.mode.data
-        code = create_code(mode=mode, year=year, projs=projs)
+        code = f"{mode.upper()}-{str(year)[2:]}-00-{projs_num.zfill(3)}"
         project = Project(
             key=code,
             title=form.title.data,
             abc=form.abc.data,
             mode=form.mode.data,
             cls=form.proj_class.data,
+            status="On-going",
         )
         db.session.add(project)
         db.session.commit()
@@ -44,13 +45,13 @@ def project_all():
 
 @projects.route("/projects/<key>", methods=["GET", "POST"])
 def details(key):
-    detail = Project.query.filter(Project.key.contains(key)).first()
-    lots = detail.lots_id
+    proj = Project.query.filter(Project.key.contains(key)).first()
+    lots = proj.lots_id
     form_lot = NewLot()
     if form_lot.validate_on_submit():
         lots = Lots(
-            project_id=detail.id,
-            lot_key=create_lot_code(key),
+            project_id=proj.id,
+            lot_key=proj.key[:7] + str(len(proj.lots_id) + 1).zfill(2) + proj.key[9:],
             lot_title=form_lot.title.data,
             abc=form_lot.abc.data,
         )
@@ -61,7 +62,7 @@ def details(key):
         "projects/details.html",
         title=key,
         active_data="active",
-        detail=detail,
+        proj=proj,
         form_lot=form_lot,
         lots=lots,
     )

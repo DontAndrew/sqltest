@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content_header%}
-<h4>{{ detail.title }}</h4>
+<h4>{{ proj.key }}</h4>
 {% endblock%}
 {% block content %}
 <div class="modal fate" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -73,30 +73,32 @@
                 <tbody>
                     <tr>
                         <th scope="col">Project Identifier:</th>
-                        <td>{{ detail.key }}</td>
+                        <td>{{ proj.key }}</td>
                     </tr>
                     <tr>
                         <th scope="col">Project Title:</th>
-                        <td>{{ detail.title }}</td>
+                        <td colspan="3">{{ proj.title }}</td>
                     </tr>
                     <tr>
                         <th scope="col">Approved Budget:</th>
-                        <td>{{ detail.abc }}</td>
+                        <td>{{ proj.abc }}</td>
                         <th scope="col">APP</th>
                         <td>APP #</td>
                     </tr>
                     <tr>
                         <th scope="col">Mode of Procurement:</th>
-                        <td>{{ detail.mode }}</td>
+                        <td>{{ proj.mode }}</td>
                     </tr>
                     <tr>
                         <th scope="col">Classifications:</th>
-                        <td>{{ detail.cls }}</td>
+                        <td>{{ proj.cls }}</td>
                     </tr>
+                    {% if proj.mode == 'pbp' %}
                     <tr>
                         <th scope="col">Lots:</th>
                         <td><button type="button" data-toggle="modal" data-target="#addModal">Add Lot</button></td>
                     </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>

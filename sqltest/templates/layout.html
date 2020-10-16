@@ -11,8 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
 </head>
@@ -49,7 +48,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                Products
+                                dev_projects
                             </a>
                         </li>
                         <li class="nav-item">
@@ -95,6 +94,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+    <!-- datatable js -->
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        $('#proj-dt').DataTable({
+            columnDefs: [{
+                targets: 2,
+                render: $.fn.dataTable.render.ellipsis(90)
+            }]
+        });
+    </script>
 </body>
 
 </html>
